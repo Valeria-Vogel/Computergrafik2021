@@ -22,24 +22,59 @@ namespace FuseeApp
         private SceneContainer _scene;
         private SceneRendererForward _sceneRenderer;
         private Transform _rightRearWheelTransform;
+        private Transform _firstFingerTransform;
         private SurfaceEffect _rightRearWheelEffect;
         private ScenePicker _scenePicker;
+        private Transform _baseTransform;
         private PickResult _currentPick;
         private float4 _oldColor;
+        SceneContainer CreateScene()
+        {
+            // Initialize transform components that need to be changed inside "RenderAFrame"
+            _baseTransform = new Transform
+            {
+                Rotation = new float3(0, 0, 0),
+                Scale = new float3(1, 1, 1),
+                Translation = new float3(0, 0, 0)
+            };
 
+            // Setup the scene graph
+            return new SceneContainer
+            {
+                Children = new List<SceneNode>
+                {
+                    new SceneNode
+                    {
+                        Components = new List<SceneComponent>
+                        {
+                            // TRANSFROM COMPONENT
+                            _baseTransform,
+
+                            // SHADER EFFECT COMPONENT
+                            SimpleMeshes.MakeMaterial((float4) ColorUint.LightGrey),
+
+                            // MESH COMPONENT
+                            // SimpleAssetsPickinges.CreateCuboid(new float3(10, 10, 10))
+                            SimpleMeshes.CreateCuboid(new float3(10, 10, 10))
+                        }
+                    },
+                }
+            };
+        }
 
         // Init is called on startup. 
         public override void Init()
         {
             RC.ClearColor = new float4(0.8f, 0.9f, 0.7f, 1);
 
-            _scene = AssetStorage.Get<SceneContainer>("CubeCar.fuz");
+            _scene = AssetStorage.Get<SceneContainer>("CubeCar_new.fus");
 
-            _rightRearWheelTransform.Rotation = _scene.Children.FindNodes(node => node.Name == "RightRearWheel")?.FirstOrDefault()?.GetComponent<Transform>();
+            _rightRearWheelTransform = _scene.Children.FindNodes(node => node.Name == "RightRearWheel")?.FirstOrDefault()?.GetTransform();
+             _firstFingerTransform = _scene.Children.FindNodes(node => node.Name == "FirstFinger")?.FirstOrDefault()?.GetTransform();
             _rightRearWheelEffect = _scene.Children.FindNodes(node => node.Name == "RightRearWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
 
             // Create a scene renderer holding the scene above
-             _sceneRenderer = new SceneRendererForward(_scene);
+            _sceneRenderer = new SceneRendererForward(_scene);
             _scenePicker = new ScenePicker(_scene);
         }
 
@@ -49,19 +84,17 @@ namespace FuseeApp
         {
             SetProjectionAndViewport();
 
-            _rightRearWheelTransform.Rotation = new float3(0, M.MinAngle(TimeSinceStart),0);
-            _rightRearWheelEffect.SurfaceInput.Albedo = (float4) ColorUint.BlueViolet;
+            _rightRearWheelTransform.Rotation.y += Keyboard.ADAxis;
+            //_firstFingerTransform.Translation.y += Keyboard.UpDownAxis;
+            _rightRearWheelEffect.SurfaceInput.Albedo = (float4)ColorUint.BlueViolet;
 
             // Clear the backbuffer
             RC.Clear(ClearFlags.Color | ClearFlags.Depth);
 
             // Setup the camera 
-            RC.View = float4x4.CreateTranslation(0, 0, 40) * float4x4.CreateRotationX(-(float) Math.Atan(15.0 / 40.0));
+            RC.View = float4x4.CreateTranslation(0, 0, 40) * float4x4.CreateRotationX(-(float)Math.Atan(15.0 / 40.0));
 
-            // Setup the camera 
-            RC.View = float4x4.CreateTranslation(0, 0, 40) * float4x4.CreateRotationX(-(float) Math.Atan(15.0 / 40.0));
-
-             if (Mouse.LeftButton)
+            if (Mouse.LeftButton)
             {
                 float2 pickPosClip = Mouse.Position * new float2(2.0f / Width, -2.0f / Height) + new float2(-1, 1);
 
@@ -78,7 +111,7 @@ namespace FuseeApp
                     {
                         var ef = newPick.Node.GetComponent<SurfaceEffect>();
                         _oldColor = ef.SurfaceInput.Albedo;
-                        ef.SurfaceInput.Albedo = (float4) ColorUint.OrangeRed;
+                        ef.SurfaceInput.Albedo = (float4)ColorUint.OrangeRed;
                     }
                     _currentPick = newPick;
                 }
@@ -86,6 +119,11 @@ namespace FuseeApp
 
             // Render the scene on the current render context
             _sceneRenderer.Render(RC);
+
+            if (_currentPick != null)
+            {
+                _currentPick.Node.GetTransform().Rotation.y += Keyboard.UpDownAxis * DeltaTime;
+            }
 
             // Swap buffers: Show the contents of the backbuffer (containing the currently rendered frame) on the front buffer.
             Present();
@@ -104,6 +142,6 @@ namespace FuseeApp
             // Back clipping happens at 2000 (Anything further away from the camera than 2000 world units gets clipped, polygons will be cut)
             var projection = float4x4.CreatePerspectiveFieldOfView(M.PiOver4, aspectRatio, 1, 20000);
             RC.Projection = projection;
-        }                
+        }
     }
 }
