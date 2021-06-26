@@ -1,11 +1,10 @@
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Assets\CubeCar_new.fus
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Tut11_AssetsPicking.deps.json
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Tut11_AssetsPicking.dll
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Tut11_AssetsPicking.pdb
 C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.csprojAssemblyReference.cache
 C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.AssemblyInfoInputs.cache
 C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.AssemblyInfo.cs
 C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.csproj.CoreCompileInputs.cache
-C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Assets\CubeCar.fus
-C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Tut11_AssetsPicking.deps.json
-C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Tut11_AssetsPicking.dll
-C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Tut11_AssetsPicking.pdb
 C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.dll
 C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.pdb
-C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\bin\Debug\Assets\CubeCar_new.fus

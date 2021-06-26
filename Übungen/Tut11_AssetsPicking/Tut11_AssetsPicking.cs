@@ -21,13 +21,25 @@ namespace FuseeApp
     {
         private SceneContainer _scene;
         private SceneRendererForward _sceneRenderer;
-        private Transform _rightRearWheelTransform;
-        private Transform _firstFingerTransform;
-        private SurfaceEffect _rightRearWheelEffect;
+        private Transform _rightRearWheelTransform, _leftRearWheelTransform, _rightMiddleWheelTransform, _leftMiddleWheelTransform, _rightFrontWheelTransform,
+         _leftFrontWheelTransform, _baseArmTransform, _upperArmTransform, _foreArmTransform, _firstFingerTransform, _secondFingerTransform;
+        private SurfaceEffect _rightRearWheelEffect, _leftRearWheelEffect, _rightMiddlelWheelEffect, _leftMiddleWheelEffect, _rightFrontWheelEffect,
+         _leftFrontWheelEffect, _baseArmEffect, _upperArmEffect, _foreArmEffect, _firstFingerEffect, _secondFingerEffect;
         private ScenePicker _scenePicker;
         private Transform _baseTransform;
         private PickResult _currentPick;
         private float4 _oldColor;
+
+        private static float _angelHorz = M.PiOver4, _angelVert;
+        private static float _angelVelHorz, _angelVelVert;
+        private const float RotationSpeed = 7;
+
+        private const float Damping = 0.8f;
+        private float _angel = 0.5f;
+        private Boolean spacePressed = false;
+        private Boolean opening = true;
+
+
         SceneContainer CreateScene()
         {
             // Initialize transform components that need to be changed inside "RenderAFrame"
@@ -70,8 +82,28 @@ namespace FuseeApp
             _scene = AssetStorage.Get<SceneContainer>("CubeCar_new.fus");
 
             _rightRearWheelTransform = _scene.Children.FindNodes(node => node.Name == "RightRearWheel")?.FirstOrDefault()?.GetTransform();
-             _firstFingerTransform = _scene.Children.FindNodes(node => node.Name == "FirstFinger")?.FirstOrDefault()?.GetTransform();
+            _leftRearWheelTransform = _scene.Children.FindNodes(node => node.Name == "LeftRearWheel")?.FirstOrDefault()?.GetTransform();
+            _rightMiddleWheelTransform = _scene.Children.FindNodes(node => node.Name == "RightMiddleWheel")?.FirstOrDefault()?.GetTransform();
+            _leftMiddleWheelTransform = _scene.Children.FindNodes(node => node.Name == "LeftMiddleWheel")?.FirstOrDefault()?.GetTransform();
+            _rightFrontWheelTransform = _scene.Children.FindNodes(node => node.Name == "RightFrontWheel")?.FirstOrDefault()?.GetTransform();
+            _leftFrontWheelTransform = _scene.Children.FindNodes(node => node.Name == "LeftFrontWheel")?.FirstOrDefault()?.GetTransform();
+            _baseArmTransform = _scene.Children.FindNodes(node => node.Name == "BaseArm")?.FirstOrDefault()?.GetTransform();
+            _upperArmTransform = _scene.Children.FindNodes(node => node.Name == "UpperArm")?.FirstOrDefault()?.GetTransform();
+            _foreArmTransform = _scene.Children.FindNodes(node => node.Name == "ForeArm")?.FirstOrDefault()?.GetTransform();
+            _firstFingerTransform = _scene.Children.FindNodes(node => node.Name == "FirstFinger")?.FirstOrDefault()?.GetTransform();
+            _secondFingerTransform = _scene.Children.FindNodes(node => node.Name == "SecondFinger")?.FirstOrDefault()?.GetTransform();
+
             _rightRearWheelEffect = _scene.Children.FindNodes(node => node.Name == "RightRearWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _leftRearWheelEffect = _scene.Children.FindNodes(node => node.Name == "LeftRearWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _rightMiddlelWheelEffect = _scene.Children.FindNodes(node => node.Name == "RightMiddlelWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _leftMiddleWheelEffect = _scene.Children.FindNodes(node => node.Name == "LeftMiddleWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _rightFrontWheelEffect = _scene.Children.FindNodes(node => node.Name == "RightFrontWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _leftFrontWheelEffect = _scene.Children.FindNodes(node => node.Name == "LeftFrontWheel")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _baseArmEffect = _scene.Children.FindNodes(node => node.Name == "BaseArm")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _upperArmEffect = _scene.Children.FindNodes(node => node.Name == "UpperArm")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _foreArmEffect = _scene.Children.FindNodes(node => node.Name == "ForeArm")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _firstFingerEffect = _scene.Children.FindNodes(node => node.Name == "FirstFinger")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
+            _secondFingerEffect = _scene.Children.FindNodes(node => node.Name == "SecondFinger")?.FirstOrDefault()?.GetComponent<SurfaceEffect>();
 
             // Create a scene renderer holding the scene above
             _sceneRenderer = new SceneRendererForward(_scene);
@@ -84,9 +116,50 @@ namespace FuseeApp
         {
             SetProjectionAndViewport();
 
-            _rightRearWheelTransform.Rotation.y += Keyboard.ADAxis;
-            //_firstFingerTransform.Translation.y += Keyboard.UpDownAxis;
-            _rightRearWheelEffect.SurfaceInput.Albedo = (float4)ColorUint.BlueViolet;
+            _rightRearWheelTransform.Rotation = new float3(-M.MinAngle(TimeSinceStart), 0, 0);
+            _leftRearWheelTransform.Rotation = new float3(-M.MinAngle(TimeSinceStart), 0, 0);
+            _rightMiddleWheelTransform.Rotation = new float3(-M.MinAngle(TimeSinceStart), 0, 0);
+            _leftMiddleWheelTransform.Rotation = new float3(-M.MinAngle(TimeSinceStart), 0, 0);
+            _rightFrontWheelTransform.Rotation = new float3(-M.MinAngle(TimeSinceStart), 0, 0);
+            _leftFrontWheelTransform.Rotation = new float3(-M.MinAngle(TimeSinceStart), 0, 0);
+
+            _baseArmTransform.Rotation.y += Keyboard.LeftRightAxis * DeltaTime;
+            _upperArmTransform.Translation += Keyboard.UpDownAxis * DeltaTime;
+            _foreArmTransform.Translation += Keyboard.WSAxis * DeltaTime;
+
+            _firstFingerTransform.Rotation.z= -_angel;
+            _secondFingerTransform.Rotation.z = _angel;
+
+            if (opening)
+            {
+                if (_angel < 0.5f)
+                {
+                    _angel += 0.5f * DeltaTime;
+                }
+            }
+            else
+            {
+                if (_angel > -0.5f)
+                {
+                    _angel -= 0.5f * DeltaTime;
+                }
+            }
+
+            if (Keyboard.GetKey(KeyCodes.Space))
+            {
+                if (!spacePressed)
+                {
+                    opening = !opening;
+                }
+                spacePressed = true;
+            }
+            else
+            {
+                spacePressed = false;
+            }
+
+
+
 
             // Clear the backbuffer
             RC.Clear(ClearFlags.Color | ClearFlags.Depth);
@@ -116,6 +189,27 @@ namespace FuseeApp
                     _currentPick = newPick;
                 }
             }
+
+            //Create Moving possibility with mouse to look around
+            if (Mouse.MiddleButton)
+            {
+                _angelVelHorz = -RotationSpeed * Mouse.XVel * DeltaTime * 0.0005f;
+                _angelVelVert = -RotationSpeed * Mouse.YVel * DeltaTime * 0.0005f;
+            }
+            else if (Touch.GetTouchActive(TouchPoints.Touchpoint_0))
+            {
+
+                var touchVel = Touch.GetVelocity(TouchPoints.Touchpoint_0);
+                _angelVelHorz = -RotationSpeed * touchVel.x * DeltaTime * 0.0005f;
+                _angelVelVert = -RotationSpeed * touchVel.y * DeltaTime * 0.0005f;
+            }
+
+            _angelHorz += _angelVelHorz;
+            _angelVert += _angelVelVert;
+
+            var mtxRot = float4x4.CreateRotationX(_angelVert) * float4x4.CreateRotationY(_angelHorz);
+            var mtxCam = float4x4.LookAt(0, 10, -30, 0, 1, 0, 0, 10, 0);
+            RC.View = mtxCam * mtxRot;
 
             // Render the scene on the current render context
             _sceneRenderer.Render(RC);
