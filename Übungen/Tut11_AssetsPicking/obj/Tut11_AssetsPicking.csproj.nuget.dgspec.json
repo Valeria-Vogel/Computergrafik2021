@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Valeria Vogel\\OneDrive\\Dokumente\\UNI\\2 Semeser\\Computergrafik & 3d Modelierung\\Computergrafik\\Übungen\\Tut11_AssetsPicking\\Tut11_AssetsPicking.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Valeria Vogel\\OneDrive\\Dokumente\\UNI\\2 Semeser\\Computergrafik & 3d Modelierung\\Computergrafik\\Übungen\\Tut11_AssetsPicking\\Tut11_AssetsPicking.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Valeria Vogel\\OneDrive\\Dokumente\\UNI\\2 Semeser\\Computergrafik & 3d Modelierung\\Computergrafik\\Übungen\\Tut11_AssetsPicking\\Tut11_AssetsPicking.csproj",
+        "projectName": "Tut11_AssetsPicking",
+        "projectPath": "C:\\Users\\Valeria Vogel\\OneDrive\\Dokumente\\UNI\\2 Semeser\\Computergrafik & 3d Modelierung\\Computergrafik\\Übungen\\Tut11_AssetsPicking\\Tut11_AssetsPicking.csproj",
+        "packagesPath": "C:\\Users\\Valeria Vogel\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Valeria Vogel\\OneDrive\\Dokumente\\UNI\\2 Semeser\\Computergrafik & 3d Modelierung\\Computergrafik\\Übungen\\Tut11_AssetsPicking\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Valeria Vogel\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Fusee.Desktop": {
+              "target": "Package",
+              "version": "[0.10.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

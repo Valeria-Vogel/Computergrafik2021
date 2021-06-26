@@ -1,0 +1,4 @@
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.csprojAssemblyReference.cache
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.AssemblyInfoInputs.cache
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.AssemblyInfo.cs
+C:\Users\Valeria Vogel\OneDrive\Dokumente\UNI\2 Semeser\Computergrafik & 3d Modelierung\Computergrafik\Übungen\Tut11_AssetsPicking\obj\Debug\Tut11_AssetsPicking.csproj.CoreCompileInputs.cache
